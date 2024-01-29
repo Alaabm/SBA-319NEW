@@ -4,11 +4,24 @@ import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
+//BASE URL
+//localhost:5050/comments
+
 // Query collection middleware
 router.use(async (req, res, next) => {
     req.comments = await db.collection('comments');
     next();
 });
+
+//Create a single comment entry
+router.post("/" , async (req, res) => {
+    let collection = await db.collection('comments');
+    let newDocument = req.body
+
+    let result = await collection.insertOne(newDocument);
+    if (!result) res.send('Bad Request').status(400);
+    else res.send('result').status(200);
+})
 
 
 //Get a comment post entry
@@ -21,6 +34,7 @@ router.get("/:id", async (req, res) => {
     else res.send(result).status(200);
 });
 
+//Route to fetch all comments
 router.get("/", async (req, res) => {
     try {
         let result = await req.comments.find().toArray();

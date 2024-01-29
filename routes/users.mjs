@@ -14,6 +14,17 @@ router.use(async (req, res, next) => {
     next();
 });
 
+//Create a single user entry
+router.post("/" , async (req, res) => {
+    let collection = await db.collection('users');
+    let newDocument = req.body
+
+    let result = await collection.insertOne(newDocument);
+    if (!result) res.send('Bad Request').status(400);
+    else res.send('result').status(200);
+})
+
+
 //Get a single user entry
 //use new object id when we are using _id
 router.get("/:id", async (req, res) => {
@@ -25,6 +36,7 @@ router.get("/:id", async (req, res) => {
     else res.send(result).status(200);
 });
 
+ //Route to fetch all users
 router.get("/", async (req, res) => {
     try {
         let result = await req.users.find().toArray();
@@ -33,6 +45,18 @@ router.get("/", async (req, res) => {
         res.send({ error: 'Error fetching users' }).status(500);
     }
 });
+
+router.use((req, res, next) => {
+    console.log('Request made to /comments');
+    next();
+});
+
+router.route('/')  
+    .get((req, res) => {
+        res.json(comments)
+    })
+
+
 
 
 
