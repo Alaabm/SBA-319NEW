@@ -44,6 +44,16 @@ router.get("/", async (req, res) => {
     }
 });
 
+//Delete a single data entry
+router.delete("/:id", async (req, res) => {
+    let collection = await db.collection('posts');
+    let query = {_id: new ObjectId(req.params.id)};
+    let result = await collection.deleteOne(query);
+
+    if (!result) res.send ("Not Found").status(404)
+    else res.send(result).status(200);
+});
+
 router.use((req, res, next) => {
     console.log('Request made to /comments');
     next();
