@@ -54,6 +54,35 @@ router.delete("/:id", async (req, res) => {
     else res.send(result).status(200);
 });
 
+
+
+//Update a single data entry (add)
+router.patch("/:id/add", async (req, res) => {
+    let collection = await db.collection('comments');
+    let query = {_id: new Object(req.params.id)};
+
+    let result = await collection.updateOne(query, {
+    $push: {scores: req.body}
+    });
+
+    if (!result) res.send ("Not Found").status(404)
+    else res.send(result).status(200);
+});
+
+//Update a single data entry (remove)
+router.patch("/:id/remove", async (req, res) => {
+    let collection = await db.collection('comments');
+    let query = {_id: new Object(req.params.id)};
+
+    let result = await collection.updateOne(query, {
+    $push: {scores: req.body}
+    });
+
+    if (!result) res.send ("Not Found").status(404)
+    else res.send(result).status(200);
+});
+
+
 router.use((req, res, next) => {
     console.log('Request made to /comments');
     next();
