@@ -8,6 +8,26 @@ const router = express.Router();
 //BASE URL
 //localhost:5050/users
 
+//Form 
+// router.get('/', async (req, res) => {
+//     res.send(`
+//         <form action="/users" method="POST" >
+//         name: <input type="text" name="name" /> <br />
+//         username: <input type="text" name="username" /> <br />
+//         email: <input type="email" name="email" /> <br />
+//         password: <input type="password" name="password" /> <br />
+
+//         <input type="submit"/>
+//         </form>
+//     `);
+
+//     let result = await collection.insertOne(newDocument);
+//     if (!result) res.send('Bad Request').status(400);
+//     else res.send('result').status(200);
+
+// });
+
+
 // Query collection middleware
 router.use(async (req, res, next) => {
     req.users = await db.collection('users');
@@ -91,12 +111,6 @@ router.patch("/:id/remove", async (req, res) => {
     if (!result) res.send ("Not Found").status(404)
     else res.send(result).status(200);
 });
-
-
-
-
-
-
 
 
 export default router;

@@ -25,6 +25,16 @@ app.get("/", (req, res) =>{
     res.send("Hello World! This is my server!!!")
 });
 
+//Validate data
+const validatedata = (req, res, next) => {
+    const { userId } = req.body;
+    if (userId < 1) {
+    } else { console.log("Valid User ID: " + userId)
+    next();
+    }
+};
+
+
 
 app.listen(PORT, () => {
     console.log("All Aboard Express Ship" + " " + PORT)
